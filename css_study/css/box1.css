@@ -1,0 +1,19 @@
+.text1 {
+    display: inline-block;
+    margin: 10px;
+    border: 1px solid #121212;
+    border-width: 10px 5px 3px 2px; /*캐스캐이딩*/
+    padding: 5px;
+    width: 100px;
+    height: 100px;
+}
+
+.box1 {
+    display: inline-block;
+    box-sizing: border-box; /*border포함 사이즈*/
+    margin: 10px; /* margin은 사이즈에서 제외됨*/
+    border: 1px solid #121212;
+    padding: 5px;
+    width: 100px;
+    height: 100px;
+}
