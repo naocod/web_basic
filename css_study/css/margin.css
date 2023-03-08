@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    margin-left: 0px auto;
+    width: 1200px;
+    height: 1000px;
+    background-color: #dbdbdb;
+}
+
+.box {
+    display: inline-block;
+    margin: 10px;
+    width: 300px;
+    height: 150px;
+}
+
+.box2 {
+    margin: 20px 0px; /*위와 아래는 마진의 중첩현상이 일어나서 상쇄됨*/
+    width: 300px;
+    height: 150px;
+}
+
+.b1 {
+    margin-bottom: 50px;
+    background-color: red;
+}
+
+.b2 {
+    background-color: blue;
+}
+
+.b3 {
+    background-color: black;
+}

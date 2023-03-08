@@ -1,0 +1,97 @@
+* {
+    box-sizing: border-box;
+}
+
+/* html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #fafafa;
+} */
+
+body {
+    margin: 0;
+}
+
+
+.container {
+    margin: 0 auto;
+    padding-top: 60px;
+    width: 1200px;
+    height: 2000px;
+
+    background-color: #fafafa;
+}
+
+header {
+    position: fixed;
+    top: 0px;
+    width: 1200px;
+    height: 60px;
+    background-color: black;
+    z-index: 999; /*3D로 봤을 때 header의 z축이 뒤로 가있으므로 index를 확실하게 앞으로 설정*/
+}
+
+ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    
+    list-style-type: none;
+
+    color: white;
+    font-weight: 600;
+}
+
+li { /* ul안에 있는 li라서 ul li로 태그를 줘야하지만 보통 li는 ul 안에 있기에 생략*/
+    margin: 0px 5px;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.input-box {
+    position: relative;
+    border-bottom: 2px solid #dbdbdb;
+    padding-right: 90px;
+    width: 440px;
+    height: 47px;
+
+    background-color: white;
+}
+
+.email-input {
+    border: none;
+    outline: none;
+    padding: 10px 0px 8px;
+    width: 100%;
+    height: 100%;
+}
+
+.clear-button {
+    transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+
+    background-color: #aaa;
+    font-size: 16px;
+    text-align: center;
+    line-height: 17px;
+    color: white;
+
+    cursor: pointer;
+}
