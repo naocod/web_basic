@@ -1,0 +1,14 @@
+/* 속성 선택자 */
+input[type] {
+    border: 3px solid red;
+}
+
+input[type=password] {
+    border: 3px solid blue;
+}
+
+/* ~= > -을 포함하지 않음, |= > -을 포함한 */
+input[class |= text] {
+    background-color: black;
+    color: white;
+}

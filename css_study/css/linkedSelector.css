@@ -1,0 +1,19 @@
+/* 하위 선택자 */
+main article section label { /*하위 선택자는 띄어쓰기로 구분함 >> section안의 모든 label에 적용됨*/
+    color: blue;
+}
+
+/* 자식 선택자 */
+main article section > input { /* >를 통해 부모 요소와 자식 요소를 구분하고 자식 요소에만 적용됨 */
+    border: 3px solid red;
+}
+
+/* 인접 형제 선택자 */
+main article section h1 + label { /*요소 사이에 +기호를 사용하여 두 요소는 같은 레벨이면서 앞 요소 이후 처음에 적용됨*/
+    color: blueviolet;
+}
+
+/* 형제 선택자 */
+main article div h2 ~ label { /*요소 사이에 ~기호를 사용하여 앞 요소와 같은 레벨이며 뒤 요소의 모든 요소에 적용됨*/
+    color: pink;
+}

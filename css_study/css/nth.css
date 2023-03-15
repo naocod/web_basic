@@ -1,0 +1,9 @@
+/* nth-child - 같은 부모의 요소중에서 태그와 요소의 위치가 맞아야함*/
+h2:nth-child(4) {
+    color: red;
+}
+
+/* nth-of-type - 같은 부모의 요소 중에서 h1중에서 2번째 > 태그와 위치 상관 x */
+h1:nth-of-type(2) {
+    color: blue;
+}
