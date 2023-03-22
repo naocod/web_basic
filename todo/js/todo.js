@@ -25,6 +25,24 @@ class TodoEvent {
             }
         }
     }
+
+    addEventRemoveToDoClick() {
+        const removeButtons = document.querySelectorAll(".content-footer .remove-button");
+        removeButtons.forEach((removeButton, index) => {
+            removeButton.onclick = () => {
+                ModalService.getInstance().showRemoveModal(index);
+            }
+        });
+    }
+    
+    addEventModifyToDoClick() {
+        const modifyButtons = document.querySelectorAll(".content-footer .modify-button");
+        modifyButtons.forEach((modifyButton, index) => {
+            modifyButton.onclick = () => {
+                ModalService.getInstance().showModifyModal(index);
+            }
+        });
+    }
 }
 
 class TodoService {
@@ -47,9 +65,21 @@ class TodoService {
         this.loadTodoList();
     }
 
+    updateLocalStorage() {
+        localStorage.setItem("todoList", JSON.stringify(this.todoList));
+        this.loadTodoList();
+    }
+
     addTodo() {
         const todoInput = document.querySelector(".todo-input");
         const nowData = new Date(); 
+
+        const month = ("0" + (nowData.getMonth() + 1)).slice(-2);
+        const date = ("0" + nowData.getDate()).slice(-2);
+        const hours = ("0" + nowData.getHours()).slice(-2);
+        const minutes = ("0" + nowData.getMinutes()).slice(-2);
+        const seconds = ("0" + nowData.getSeconds()).slice(-2);
+       
         
         // 월이 0월부터 시작함 >> 그래서 +1 해줘야함
         // 요일이 0~6 >> 일~월
@@ -71,16 +101,16 @@ class TodoService {
         }
 
         const todoObj = {
-            todoDate: `${nowData.getFullYear()}.${nowData.getMonth() + 1}.${nowData.getDate()}.(${convertDay(nowData.getDay())})`,    // getter가 number면 +1해줘도 문제 없지만 다른거면 parseInt해서 형변환 해줘야함
-            todoDateTime: `${nowData.getHours()}:${nowData.getMinutes()}:${nowData.getSeconds()}`,
+            todoDate: `${nowData.getFullYear()}.${month}.${date}.(${convertDay(nowData.getDay())})`,    // getter가 number면 +1해줘도 문제 없지만 다른거면 parseInt해서 형변환 해줘야함
+            todoDateTime: `${hours}:${minutes}:${seconds}`,
             todoContent: todoInput.value
         }
 
         this.todoList.push(todoObj);
-        localStorage.setItem("todoList", JSON.stringify(this.todoList));
-        this.loadTodoList();
+        this.updateLocalStorage();
+        
     }
-
+    
     loadTodoList() {
         const todoContentList = document.querySelector(".todo-content-list");
         todoContentList.innerHTML = ``; // 리스트 초기화
@@ -106,5 +136,8 @@ class TodoService {
                 </li>
             `;
         });
+
+        TodoEvent.getInstance().addEventModifyToDoClick();
+        TodoEvent.getInstance().addEventRemoveToDoClick();
     }
 }

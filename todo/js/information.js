@@ -88,10 +88,15 @@ class InformationEvent {
             aboutMeSaveButton.classList.add("button-hidden");
 
             const infoInputContainers = document.querySelectorAll(".info-input-container");
+            const userInfo = InformationService.getInstance().userInfo;     // 유저 정보 가져옴
+
             infoInputContainers.forEach(infoInputContainer => {
-                // console.log( infoInputContainer.querySelector(".info-input").value);
-                infoInputContainer.querySelector(".info-input").disabled = true;
+                const infoInput = infoInputContainer.querySelector(".info-input");
+                userInfo[infoInput.id] = infoInput.value;   // userInfo가 비어있는 상태에서 객체의 값을 key-value 형태로 저장함 > Object
+                infoInput.disabled = true;
             });
+
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
         }
         
     }
@@ -117,12 +122,66 @@ class InformationEvent {
 
             const introduceInput = document.querySelector(".introduce-input");
             introduceInput.disabled = true;
+
+            const userInfo = InformationService.getInstance().userInfo;     // 유저 정보 가져옴
+            userInfo["introduce"] = introduceInput.value;  // id값이 없기에 문자열로 key값 지정
+
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
         }
     }
     
     // ========================================================================
-
     
+}
+
+class InformationService {
+    static #instance = null;
+    static getInstance() {
+        if(this.#instance == null) {
+            this.#instance = new InformationService();
+        }
+        return this.#instance;
+    }
+
+    userInfo = {};
+
+    loadInfo() {
+        this.loadInfoPhoto();
+        this.loadInfoUser();
+    }
+
+    loadInfoPhoto() {
+        const infoPhotoImg = document.querySelector(".info-photo img");
+        const infoPhoto = localStorage.getItem("infoPhoto");
+        if(localStorage.getItem("infoPhoto") == null) {
+            infoPhotoImg.src = "./images/noimage.jpg";
+        }else {
+            infoPhotoImg.src = infoPhoto;
+
+        }
+    }
+
+    loadInfoUser() {
+        this.userInfo = JSON.parse(localStorage.getItem("userInfo"))
+        if(this.userInfo == null) {
+            this.userInfo = {};
+            return;
+        }
+        Object.keys(this.userInfo).forEach(key => { // userInfo 객체의 key값을 list로 전부 뽑아서 forEach로 돌리면서 반복
+            const infoInput = document.querySelectorAll(".info-input");
+            infoInput.forEach(input => {
+                if(input.id == key) {
+                    input.value = this.userInfo[key];
+                }
+            })
+        });
+
+        if(typeof this.userInfo.introduce == "undefined"){
+            return;
+        }
+        const introduceInput = document.querySelector(".introduce-input");
+        introduceInput.value = this.userInfo.introduce;
+    }
 }
 
 class FileService {
@@ -138,6 +197,12 @@ class FileService {
         const photoForm = document.querySelector(".photo-form")
         const formData = new FormData(photoForm); // js의 내장 클래스 > form 객체를 들고와서 formdata 형식으로 가져옴
         const fileValue = formData.get("file"); // file 키의 value 값을 꺼냄
+        let changeFlag = true;
+
+        if(fileValue.size == 0) {
+            return;
+        }
+
         this.showPreview(fileValue);
     }
 
@@ -149,7 +214,9 @@ class FileService {
         fileReader.onload = (e) => {    // e > 이벤트
             const photoImg = document.querySelector(".info-photo img");
             photoImg.src = e.target.result; // 이벤트가 일어난 대상 객체의 결과를 가져옴(src)
+            localStorage.setItem("infoPhoto", photoImg.src);
         }
+
     }
 }
 
